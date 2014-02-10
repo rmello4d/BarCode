@@ -10,12 +10,8 @@ This widget __BarCode__ has the following properties:
 ### Goals
 The __BarCode__ is a draggable widget that you can add to your wakanda pages. Once added in your page, you can bind a datasource by dragging the datasource property directly into the widget or by adding the datasource property name in the value field. 
 
+Any value associated will be transformed into a barcode. You could also bind the widget with a calculated attribute. 
 
-### Events (widget.js)
-
-```
-no particular events for this widget
-```
 
 
 ### More Information
