@@ -2,6 +2,21 @@ WAF.define('BarCode', function() {
     var widget = WAF.require('waf-core/widget');
     var BarCode = widget.create('BarCode');
  	
+ 	
+ 	BarCode.addProperty ('format', {
+            type: 'enum',
+            values: {
+            	'EAN' :'EAN (13)', 
+            	'CODE128':'CODE128 (B)', 
+            	'UPC-A': 'UPC-A', 
+            	'CODE39':'CODE39',   
+            	'ITF14':'ITF14'           	
+        	},
+            defaultValue: 'CODE128', 
+            bindable: false 
+    });
+ 	
+ 	
    BarCode.prototype.init = function () {
     	 			
 		this.config = {
@@ -15,6 +30,7 @@ WAF.define('BarCode', function() {
 		this.value.onChange( function(value) { 
     		this.render(); 
     	});	
+    	
     	this.format.onChange( function(value) {
     		this.config.format = value; 
     		this.render(); 
@@ -29,7 +45,9 @@ WAF.define('BarCode', function() {
 		try {
 			$('img', this.node).JsBarcode(String(this.value()), this.config);
 		}catch(error) {
-			console.error(error);
+			this.fire('wrongFormat');
+			console.log("Value not in the right format, please verify your value ");
+
 		}
 		
     };
@@ -37,12 +55,7 @@ WAF.define('BarCode', function() {
     //Adding a bindable property
    	BarCode.addProperty('value');
    	
- 	//Possible types EAN UPCA ITF14 CODE128 CODE39
-    BarCode.addProperty('format', { 
-    	'defaultValue' : 'CODE128', 
-    	'bindable' : false
-    });
-    
+   
     return BarCode;
 });
 
